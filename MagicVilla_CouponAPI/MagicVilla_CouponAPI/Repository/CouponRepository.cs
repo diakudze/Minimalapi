@@ -19,7 +19,7 @@ namespace MagicVilla_CouponAPI.Repository
             await _db.Coupons.AddAsync(coupon);
         }
 
-        public async Task<ICollection<Coupon>> GetAlLAsync()
+        public async Task<ICollection<Coupon>> GetAllAsync()
         {
             return await _db.Coupons.ToListAsync(); 
         }
