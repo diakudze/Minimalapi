@@ -1,3 +1,4 @@
+using System;
 namespace MagicVilla_CouponAPI.Models
 {
     public class Coupon
@@ -6,7 +7,7 @@ namespace MagicVilla_CouponAPI.Models
         public string Name { get; set; }
         public int Percent { get; set; }
         public bool IsActive { get; set; }
-        public DateTime? Created { get; set; } = DateTime.UtcNow;
+        public DateTime? Created { get; set; }
         public DateTime? LastUpdated { get; set; }
 
     }

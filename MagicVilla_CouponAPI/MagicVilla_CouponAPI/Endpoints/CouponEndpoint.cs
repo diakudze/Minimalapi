@@ -69,7 +69,7 @@ namespace MagicVilla_CouponAPI.Endpoints
             response.StatusCode = HttpStatusCode.OK;
             return Results.Ok(response);
         }
-
+    
         private async static Task<IResult> CreateCoupon(ICouponRepository _couponRepo,
                 [FromServices] IMapper _mapper,
                 [FromServices] IValidator<CouponCreateDTO> _validation,

@@ -11,6 +11,7 @@ namespace MagicVilla_CouponAPI.Data
         }
 
         public DbSet<Coupon> Coupons { get; set; }
+        public DbSet<LocalUser> LocalUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -18,40 +19,34 @@ namespace MagicVilla_CouponAPI.Data
             {
                 entity.Property(c => c.Created)
                     .HasDefaultValueSql("NOW() AT TIME ZONE 'UTC'");
-                
+
                 entity.Property(c => c.LastUpdated)
                     .HasDefaultValueSql("NOW() AT TIME ZONE 'UTC'");
-                
+
                 entity.HasData(
                     new Coupon
                     {
                         Id = 1,
                         Name = "10OFF",
                         Percent = 10,
-                        IsActive = true,
-                        Created = DateTime.UtcNow,
-                        LastUpdated = DateTime.UtcNow
+                        IsActive = true
                     },
                     new Coupon
                     {
                         Id = 2,
                         Name = "20OFF",
                         Percent = 20,
-                        IsActive = true,
-                        Created = DateTime.UtcNow,
-                        LastUpdated = DateTime.UtcNow
+                        IsActive = true
                     },
                     new Coupon
                     {
                         Id = 3,
                         Name = "30OFF",
                         Percent = 14,
-                        IsActive = true,
-                        Created = DateTime.UtcNow,
-                        LastUpdated = DateTime.UtcNow
+                        IsActive = true
                     }
                 );
             });
-            }
+        }
         }
     }

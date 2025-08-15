@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MagicVilla_CouponAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreatePostgreSQL : Migration
+    public partial class AddLocalUsers : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,22 +23,38 @@ namespace MagicVilla_CouponAPI.Migrations
                     Name = table.Column<string>(type: "text", nullable: true),
                     Percent = table.Column<int>(type: "integer", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    LastUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: true, defaultValueSql: "NOW() AT TIME ZONE 'UTC'"),
+                    LastUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true, defaultValueSql: "NOW() AT TIME ZONE 'UTC'")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Coupons", x => x.Id);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "LocalUsers",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserName = table.Column<string>(type: "text", nullable: true),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    Password = table.Column<string>(type: "text", nullable: true),
+                    Role = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LocalUsers", x => x.ID);
+                });
+
             migrationBuilder.InsertData(
                 table: "Coupons",
-                columns: new[] { "Id", "Created", "IsActive", "LastUpdated", "Name", "Percent" },
+                columns: new[] { "Id", "IsActive", "Name", "Percent" },
                 values: new object[,]
                 {
-                    { 1, null, true, null, "10OFF", 10 },
-                    { 2, null, true, null, "20OFF", 20 },
-                    { 3, null, true, null, "30OFF", 14 }
+                    { 1, true, "10OFF", 10 },
+                    { 2, true, "20OFF", 20 },
+                    { 3, true, "30OFF", 14 }
                 });
         }
 
@@ -47,6 +63,9 @@ namespace MagicVilla_CouponAPI.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Coupons");
+
+            migrationBuilder.DropTable(
+                name: "LocalUsers");
         }
     }
 }
