@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Azure;
 using MagicVilla_CouponAPI;
-using Microsoft.AspNetCore.Http;
 using MagicVilla_CouponAPI.Endpoints;
+
 
 
 namespace MagicVilla_CouponAPI.Endpoints
@@ -26,7 +26,7 @@ namespace MagicVilla_CouponAPI.Endpoints
                 .Produces<APIResponse>(200)
                 .Produces(400);
 
-            app.MapPost("/api/Register", Login).WithName("Register")
+            app.MapPost("/api/Register", Register).WithName("Register")
                 .Accepts<RegistrationRequestDTO>("application/json")
                 .Produces<APIResponse>(200)
                 .Produces(400);    
