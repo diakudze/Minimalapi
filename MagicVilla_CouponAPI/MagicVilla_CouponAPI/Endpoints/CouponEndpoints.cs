@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Azure;
 using MagicVilla_CouponAPI;
+using MagicVilla_CouponAPI.Endpoints;
+
 
 
 
@@ -49,6 +51,8 @@ namespace MagicVilla_CouponAPI.Endpoints
                 .Produces(404);
 
         }
+
+        
 
         private async static Task<IResult> GetAllCoupon(ICouponRepository _couponRepo, ILogger<Program> _logger)
         {
