@@ -40,38 +40,43 @@ namespace MagicVilla_CouponAPI.Repository
             return false;
         }
 
-        public Task<LoginResponseDTO> Login(LoginRequestDTO loginRequestDTO)
+        public Task<LoginResponseDTO?> Login(LoginRequestDTO loginRequestDTO)
+{
+    var user = _db.LocalUsers.FirstOrDefault(
+        u => u.UserName == loginRequestDTO.UserName && 
+            u.Password == loginRequestDTO.Password);
+
+    if (user == null)
+    {
+        return Task.FromResult<LoginResponseDTO?>(null); // Явно указываем тип
+    }
+
+    var tokenHandler = new JwtSecurityTokenHandler();
+    var key = Encoding.ASCII.GetBytes(secretKey);
+
+    var tokenDescriptor = new SecurityTokenDescriptor
+    {
+        Subject = new ClaimsIdentity(new[]
         {
-            var user = _db.LocalUsers.FirstOrDefault(u => u.UserName == loginRequestDTO.UserName && u.Password == loginRequestDTO.Password);
+            new Claim(ClaimTypes.Name, user.UserName),
+            new Claim(ClaimTypes.Role, user.Role),
+        }),
+        Expires = DateTime.UtcNow.AddDays(7),
+        SigningCredentials = new SigningCredentials(
+            new SymmetricSecurityKey(key),
+            SecurityAlgorithms.HmacSha256Signature)
+    };
 
-            //User not found
-            if (user == null)
-            {
-                return null;
-            }
+    var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(secretKey);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                                    {
-                                        new Claim(ClaimTypes.Name, user.UserName),
-                                        new Claim(ClaimTypes.Role, user.Role),
-                                    }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
+    var loginResponseDTO = new LoginResponseDTO
+    {
+        User = _mapper.Map<UserDTO>(user),
+        Token = tokenHandler.WriteToken(token)
+    };
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            LoginResponseDTO loginResponseDTO = new()
-            {
-                User = _mapper.Map<UserDTO>(user),
-                Token = new JwtSecurityTokenHandler().WriteToken(token)
-            };
-            return Task.FromResult(loginResponseDTO);
-            
-        }
+    return Task.FromResult(loginResponseDTO);
+}
 
 
         public async Task<UserDTO> Register(RegistrationRequestDTO requestDTO)

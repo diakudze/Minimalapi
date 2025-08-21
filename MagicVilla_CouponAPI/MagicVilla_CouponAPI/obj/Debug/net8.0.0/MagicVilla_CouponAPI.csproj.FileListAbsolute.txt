@@ -174,3 +174,4 @@
 /home/grigorych/Dev/CSHARP/MinimalApi/MagicVilla_CouponAPI/MagicVilla_CouponAPI/obj/Debug/net8.0.0/MagicVilla_CouponAPI.pdb
 /home/grigorych/Dev/CSHARP/MinimalApi/MagicVilla_CouponAPI/MagicVilla_CouponAPI/obj/Debug/net8.0.0/MagicVilla_CouponAPI.genruntimeconfig.cache
 /home/grigorych/Dev/CSHARP/MinimalApi/MagicVilla_CouponAPI/MagicVilla_CouponAPI/obj/Debug/net8.0.0/ref/MagicVilla_CouponAPI.dll
+/home/grigorych/Dev/CSHARP/MinimalApi/MagicVilla_CouponAPI/MagicVilla_CouponAPI/bin/Debug/net8.0.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll

@@ -24,7 +24,7 @@ namespace MagicVilla_CouponAPI.Endpoints
 
             // Получение списка всех купонов
             app.MapGet("/api/coupon", GetAllCoupon).WithName("GetCoupons")
-                .Produces<APIResponse>(200);
+                .Produces<APIResponse>(200).RequireAuthorization();
 
             // Получение купона по его идентификатору
             app.MapGet("/api/coupon/{id:int}", GetCoupon).WithName("GetCoupon")
