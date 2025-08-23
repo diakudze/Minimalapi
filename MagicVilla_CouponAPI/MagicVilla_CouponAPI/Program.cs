@@ -1,14 +1,8 @@
-using AutoMapper;
-using MagicVilla_CouponAPI;
 using MagicVilla_CouponAPI.Data;
-using MagicVilla_CouponAPI.Models;
 using MagicVilla_CouponAPI.Models.DTO;
-using Microsoft.AspNetCore.Mvc;
 using MagicVilla_CouponAPI.Validations;
 using FluentValidation;
-using System.Net;
 using Microsoft.EntityFrameworkCore;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
 using MagicVilla_CouponAPI.Repository.IRepository;
 using MagicVilla_CouponAPI.Repository;
 using MagicVilla_CouponAPI.Endpoints;
@@ -16,6 +10,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Identity;
+using MagicVilla_CouponAPI.Models;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +19,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddDefaultTokenProviders().AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddSwaggerGen(option => {
     option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -74,7 +71,10 @@ builder.Services.AddAuthentication(x => {
         ValidateAudience = false
     };
 });
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole("admin"));
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

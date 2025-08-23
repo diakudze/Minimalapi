@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Azure;
 using MagicVilla_CouponAPI;
 using MagicVilla_CouponAPI.Endpoints;
+using Microsoft.AspNetCore.Authorization;
 
 
 
@@ -24,7 +25,7 @@ namespace MagicVilla_CouponAPI.Endpoints
 
             // Получение списка всех купонов
             app.MapGet("/api/coupon", GetAllCoupon).WithName("GetCoupons")
-                .Produces<APIResponse>(200).RequireAuthorization();
+                .Produces<APIResponse>(200).RequireAuthorization("AdminOnly");
 
             // Получение купона по его идентификатору
             app.MapGet("/api/coupon/{id:int}", GetCoupon).WithName("GetCoupon")
@@ -53,7 +54,7 @@ namespace MagicVilla_CouponAPI.Endpoints
         }
 
         
-
+       
         private async static Task<IResult> GetAllCoupon(ICouponRepository _couponRepo, ILogger<Program> _logger)
         {
             APIResponse response = new();
@@ -64,6 +65,7 @@ namespace MagicVilla_CouponAPI.Endpoints
             return Results.Ok(response);
         }
 
+        [Authorize]
         private async static Task<IResult> GetCoupon(ICouponRepository _couponRepo, ILogger<Program> _logger, int id)
         {
             APIResponse response = new APIResponse();
@@ -74,6 +76,7 @@ namespace MagicVilla_CouponAPI.Endpoints
             return Results.Ok(response);
         }
     
+        [Authorize]
         private async static Task<IResult> CreateCoupon(ICouponRepository _couponRepo,
                 [FromServices] IMapper _mapper,
                 [FromServices] IValidator<CouponCreateDTO> _validation,
@@ -111,6 +114,7 @@ namespace MagicVilla_CouponAPI.Endpoints
 
         }
 
+        [Authorize]
         private async static Task<IResult> UpdateCoupon(ICouponRepository _couponRepo,
                 [FromServices] IMapper _mapper,
                 [FromServices] IValidator<CouponPutDTO> _validation,
@@ -160,6 +164,7 @@ namespace MagicVilla_CouponAPI.Endpoints
             return Results.Ok(response);
         }
 
+        [Authorize]
         private async static Task<IResult> DeleteCoupon(ICouponRepository _couponRepo, int id)
         {
 

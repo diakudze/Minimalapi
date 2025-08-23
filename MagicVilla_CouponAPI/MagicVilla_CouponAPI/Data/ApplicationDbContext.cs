@@ -1,14 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using MagicVilla_CouponAPI.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace MagicVilla_CouponAPI.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
         }
+
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         public DbSet<Coupon> Coupons { get; set; }
         public DbSet<LocalUser> LocalUsers { get; set; }
@@ -17,6 +20,7 @@ namespace MagicVilla_CouponAPI.Data
         {
             modelBuilder.Entity<Coupon>(entity =>
             {
+                base.OnModelCreating(modelBuilder);
                 entity.Property(c => c.Created)
                     .HasDefaultValueSql("NOW() AT TIME ZONE 'UTC'");
 

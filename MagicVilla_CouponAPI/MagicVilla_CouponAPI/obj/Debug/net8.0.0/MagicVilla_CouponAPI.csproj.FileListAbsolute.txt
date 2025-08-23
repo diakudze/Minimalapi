@@ -175,3 +175,8 @@
 /home/grigorych/Dev/CSHARP/MinimalApi/MagicVilla_CouponAPI/MagicVilla_CouponAPI/obj/Debug/net8.0.0/MagicVilla_CouponAPI.genruntimeconfig.cache
 /home/grigorych/Dev/CSHARP/MinimalApi/MagicVilla_CouponAPI/MagicVilla_CouponAPI/obj/Debug/net8.0.0/ref/MagicVilla_CouponAPI.dll
 /home/grigorych/Dev/CSHARP/MinimalApi/MagicVilla_CouponAPI/MagicVilla_CouponAPI/bin/Debug/net8.0.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/home/grigorych/Dev/CSHARP/MinimalApi/MagicVilla_CouponAPI/MagicVilla_CouponAPI/bin/Debug/net8.0.0/Microsoft.AspNetCore.Cryptography.Internal.dll
+/home/grigorych/Dev/CSHARP/MinimalApi/MagicVilla_CouponAPI/MagicVilla_CouponAPI/bin/Debug/net8.0.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+/home/grigorych/Dev/CSHARP/MinimalApi/MagicVilla_CouponAPI/MagicVilla_CouponAPI/bin/Debug/net8.0.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+/home/grigorych/Dev/CSHARP/MinimalApi/MagicVilla_CouponAPI/MagicVilla_CouponAPI/bin/Debug/net8.0.0/Microsoft.Extensions.Identity.Core.dll
+/home/grigorych/Dev/CSHARP/MinimalApi/MagicVilla_CouponAPI/MagicVilla_CouponAPI/bin/Debug/net8.0.0/Microsoft.Extensions.Identity.Stores.dll
