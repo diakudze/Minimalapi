@@ -34,9 +34,10 @@ namespace MagicVilla_CouponAPI.Repository
             return await _db.Coupons.FirstOrDefaultAsync(u => u.Name.ToLower() == couponName.ToLower());
         }
 
-        public async Task RemoveAsync(Coupon coupon)
+        public Task RemoveAsync(Coupon coupon)
         {
             _db.Coupons.Remove(coupon);
+            return Task.CompletedTask;
         }
 
         public async Task SaveAsync()
@@ -44,7 +45,7 @@ namespace MagicVilla_CouponAPI.Repository
             await _db.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Coupon coupon)
+        public Task UpdateAsync(Coupon coupon)
         {
             // Проверяем состояние сущности
             var entry = _db.Entry(coupon);
@@ -55,6 +56,7 @@ namespace MagicVilla_CouponAPI.Repository
             }
             // Помечаем сущность как измененную
             entry.State = EntityState.Modified;
+            return Task.CompletedTask;
         }
     }
 }

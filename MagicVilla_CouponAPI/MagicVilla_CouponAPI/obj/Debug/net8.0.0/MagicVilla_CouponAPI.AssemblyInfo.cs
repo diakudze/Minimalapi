@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MagicVilla_CouponAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ce1f3cb236294e136b2a8047b1db0012da9a6bb7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c9d5744055ed7c41daaa7a3accf780be4fe3517b")]
 [assembly: System.Reflection.AssemblyProductAttribute("MagicVilla_CouponAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MagicVilla_CouponAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

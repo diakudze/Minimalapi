@@ -1,3 +1,5 @@
+#nullable enable
+
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
@@ -21,7 +23,7 @@ namespace MagicVilla_CouponAPI.Repository
         private readonly IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly string secretKey;
+        private readonly string secretKey = null!;
 
         public AuthRepository(ApplicationDbContext db, IMapper mapper, IConfiguration configuration,
             UserManager<ApplicationUser> userManager,
@@ -32,7 +34,8 @@ namespace MagicVilla_CouponAPI.Repository
             _configuration = configuration;
             _userManager = userManager;
             _roleManager = roleManager;
-            secretKey = _configuration.GetValue<string>("ApiSettings:Secret");
+            secretKey = _configuration.GetValue<string>("ApiSettings:Secret")
+                ?? throw new ArgumentNullException("ApiSettings:Secret is missing in configuration");
         }
 
         public bool IsUniqueUser(string username)
@@ -50,6 +53,11 @@ namespace MagicVilla_CouponAPI.Repository
 {
     var user = _db.ApplicationUsers.FirstOrDefault(
         u => u.UserName == loginRequestDTO.UserName);
+            if (user == null)
+            {
+                return null;
+            }
+            
             bool isValid = await _userManager.CheckPasswordAsync(user, loginRequestDTO.Password);
 
             if (user == null || isValid == false)
@@ -66,8 +74,8 @@ namespace MagicVilla_CouponAPI.Repository
     {
         Subject = new ClaimsIdentity(new[]
         {
-            new Claim(ClaimTypes.Name, user.UserName),
-            new Claim(ClaimTypes.Role, roles.FirstOrDefault()),
+            new Claim(ClaimTypes.Name, user.UserName ?? string.Empty),
+            new Claim(ClaimTypes.Role, roles.FirstOrDefault() ?? string.Empty),
         }),
         Expires = DateTime.UtcNow.AddDays(7),
         SigningCredentials = new SigningCredentials(
@@ -88,7 +96,7 @@ namespace MagicVilla_CouponAPI.Repository
 }
 
 
-        public async Task<UserDTO> Register(RegistrationRequestDTO requestDTO)
+        public async Task<UserDTO?> Register(RegistrationRequestDTO requestDTO)
         {
             ApplicationUser userObj = new()
             {
@@ -111,10 +119,10 @@ namespace MagicVilla_CouponAPI.Repository
                     await _userManager.AddToRoleAsync(userObj, "admin");
 
                     var user = _db.ApplicationUsers.FirstOrDefault(u => u.UserName == requestDTO.UserName);
-                    return _mapper.Map<UserDTO>(user);
+                    return user != null ? _mapper.Map<UserDTO>(user) : null;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
             }
